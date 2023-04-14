@@ -1,37 +1,46 @@
 package ru.praktikumservices.qascooter.sprint_4_final_mandrikov.HomePage;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import static ru.praktikumservices.qascooter.sprint_4_final_mandrikov.HomePage.Locators.*;
 
 public class OrderPage {
     private WebDriver driver;
 
     // Локатор
+
     public OrderPage(WebDriver driver) {
         this.driver = driver;
     }
+    public void clickOnMakeOrderButton(By button) {
+        WebElement element = driver.findElement(button);
+        ((JavascriptExecutor)driver).executeScript("arguments[0].scrollIntoView();", element);
+        element.click();
+    }
     public void setFirstName(String firstName) {
-        driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/div[2]/div[1]/input")).sendKeys(firstName);
+        driver.findElement(fieldFirstName).sendKeys(firstName);
     }
     public void setLastName(String lastName) {
-        driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/div[2]/div[2]/input")).sendKeys(lastName);
+        driver.findElement(fieldLastName).sendKeys(lastName);
     }
     public void setAddress(String address) {
-        driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/div[2]/div[3]/input")).sendKeys(address);
+        driver.findElement(fieldAddress).sendKeys(address);
     }
     public void setPhoneNumber(String phoneNumber) {
-        driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/div[2]/div[5]/input")).sendKeys(phoneNumber);
+        driver.findElement(fieldPhoneNumber).sendKeys(phoneNumber);
     }
     public void setMetroStation(String metroStation) {
-        driver.findElement(By.className("select-search__input")).sendKeys(metroStation);
-        WebElement optionscont = driver.findElement(By.className("select-search__row"));
-        optionscont.click();
+        driver.findElement(fieldMetroStation).sendKeys(metroStation);
+        WebElement optionsCont = driver.findElement(listOfMetroStation);
+        optionsCont.click();
     }
     public void clickOnNextButton() {
-        driver.findElement(By.xpath("//*[@id=\"root\"]/div/div[2]/div[3]/button")).click();
+        driver.findElement(buttonNext).click();
     }
-    public void createOrder (String firstName, String lastName, String address, String metroStation, String phoneNumber) {
+    public void createOrder (By button,String firstName, String lastName, String address, String metroStation, String phoneNumber) {
+        clickOnMakeOrderButton(button);
         setFirstName(firstName);
         setLastName(lastName);
         setAddress(address);
@@ -39,6 +48,6 @@ public class OrderPage {
         setPhoneNumber(phoneNumber);
     }
     public void clickOnButtonCheckStatus() {
-        driver.findElement(By.xpath("/html/body/div/div/div[2]/div[5]/div[2]/button"));
+        driver.findElement(buttonCheckStatus);
     }
 }
